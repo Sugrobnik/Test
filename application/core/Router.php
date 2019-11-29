@@ -30,7 +30,23 @@ class Router {
 
     public function run() {
         if($this->match()) {
-            echo 'Маршрут найден';
+            $path = 'application\controllers\\'.ucfirst($this->params['controller']).'Controller';
+            if(class_exists($path)) {
+                $action = $this->params['action'].'Action';
+                if(method_exists($path, $action)) {
+                    $controller = new $path($this->params);
+                    $controller->$action();
+                }
+                else {
+                    echo 'Экшон не найден';
+                }
+            }
+            else {
+                echo 'Не найден контроллер: '.$path;
+            }
         }
+        else {
+            echo 'Маршрут не найден';
         }
+    }
 }
