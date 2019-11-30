@@ -38,15 +38,15 @@ class Router {
                     $controller->$action();
                 }
                 else {
-                    echo 'Экшон не найден';
+                    View::errorCode(404);
                 }
             }
             else {
-                echo 'Не найден контроллер: '.$path;
+                View::errorCode(404);
             }
         }
         else {
-            echo 'Маршрут не найден';
+            View::errorCode(500);
         }
     }
 }
